@@ -3,5 +3,9 @@
 
 export default {
   failed: 'Action failed',
-  success: 'Action was successful'
+  success: 'Action was successful',
+  index: {
+    edit: 'Edit',
+    delete: 'Delete'
+  }
 }

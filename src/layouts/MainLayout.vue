@@ -69,7 +69,7 @@ const linksList = [
     title: 'Add a page',
     caption: 'Add a page in your notes',
     icon: 'bookmark_add',
-    link: '/add-page'
+    link: '/add'
   }
 ];
 

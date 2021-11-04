@@ -1,4 +1,6 @@
 {
-  
-  "vetur.experimental.templateInterpolationService": true
+
+  "vetur.experimental.templateInterpolationService": true,
+  "atlascode.bitbucket.enabled": false,
+  "atlascode.jira.enabled": false
 }
