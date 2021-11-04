@@ -7,5 +7,10 @@ export default {
   index: {
     edit: 'Edit',
     delete: 'Delete'
+  },
+  add: {
+    title: 'Title',
+    content: 'Content',
+    saved: 'Successfully saved'
   }
 }

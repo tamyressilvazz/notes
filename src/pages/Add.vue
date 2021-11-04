@@ -1,26 +1,31 @@
 <template>
-  <div class="row q-ma-md">
-    <div class="col-12">
-      <q-form class="q-gutter-md">
-        <q-input outlined label="Title" />
-        <q-input filled type="textarea"/>
-        <div>
-          <q-btn label="Submit" type="submit" color="primary"/>
-          <q-btn label="Cancel" type="reset" color="primary" flat class="q-ml-sm" />
-        </div>
-      </q-form>
-    </div>
-  </div>
+  <q-form @submit="save()" class="q-gutter-md">
+    <q-input v-model="note.title" outlined :label="$t('add.title')"/>
+    <q-input v-model="note.content" filled type="textarea" :label="$t('add.content')"/>
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <q-btn type="submit" fab icon="done_outline" color="primary" />
+    </q-page-sticky>
+  </q-form>
 </template>
 
 <script>
 import { NotesDAO } from "../db/NotesDAO";
+import {  Note } from "../models/Note";
 
 export default {
   name: 'Add',
   data() {
     return {
-      note: null
+      note: new Note()
+    }
+  },
+  methods: {
+    save: function() {
+      NotesDAO.getInstance()
+      .save(this.note).then(() => {
+        this.$q.notify(this.$t('add.saved'));
+        window.history.back();
+      });
     }
   }
 }

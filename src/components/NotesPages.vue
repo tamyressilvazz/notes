@@ -25,7 +25,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'EssentialLink',
+  name: 'NotesPages',
   props: {
     title: {
       type: String,
