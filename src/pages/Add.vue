@@ -1,6 +1,6 @@
 <template>
   <q-form @submit="save()" class="q-gutter-md">
-    <q-input v-model="note.title" outlined :label="$t('add.title')"/>
+    <q-input v-model="note.title" outlined :label="$t('add.title')" :rules="[val => !!val || $t('add.fieldIsRequired')]"/>
     <q-input v-model="note.content" filled type="textarea" :label="$t('add.content')"/>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn type="submit" fab icon="done_outline" color="primary" />
@@ -21,9 +21,8 @@ export default {
   },
   methods: {
     save: function() {
-      NotesDAO.getInstance()
-      .save(this.note).then(() => {
-        this.$q.notify(this.$t('add.saved'));
+      NotesDAO.getInstance().save(this.note).then(() => {
+        this.$q.notify(this.$t('editor.saved'));
         window.history.back();
       });
     }

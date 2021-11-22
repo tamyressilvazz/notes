@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="note in notes">
-      <q-card class="my-card">
+      <q-card class="my-card bg-green-9 text-while q-my-md">
           <q-parallax src="https://cdn.quasar.dev/img/parallax1.jpg" :height="150"/>
 
         <q-card-section>
@@ -14,7 +14,7 @@
 
         <q-card-actions>
           <q-btn flat>{{ $t('index.edit') }}</q-btn>
-          <q-btn flat>{{ $t('index.delete') }}</q-btn>
+          <q-btn flat @click="remove(note)">{{ $t('index.delete') }}</q-btn>
         </q-card-actions>
       </q-card>
     </div>
@@ -33,6 +33,13 @@ export default {
   data() {
     return {
       notes: []
+    }
+  },
+  methods: {
+    remove: function(note) {
+        NotesDAO.getInstance().delete(note).then(() => {
+            this.$q.notify(this.$t('index.deleted'));
+        });
     }
   },
   mounted: function() {
