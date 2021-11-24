@@ -1,7 +1,7 @@
 <template>
   <q-form @submit="save()" class="q-gutter-md">
-    <q-input v-model="note.title" outlined :label="$t('add.title')" :rules="[val => !!val || $t('add.fieldIsRequired')]"/>
-    <q-input v-model="note.content" filled type="textarea" :label="$t('add.content')"/>
+    <q-input v-model="note.title" outlined :label="$t('editor.title')" :rules="[val => !!val || $t('editor.fieldIsRequired')]"/>
+    <q-input v-model="note.content" filled type="textarea" :label="$t('editor.content')"/>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn type="submit" fab icon="done_outline" color="primary" />
     </q-page-sticky>
@@ -13,7 +13,13 @@ import { NotesDAO } from "../db/NotesDAO";
 import {  Note } from "../models/Note";
 
 export default {
-  name: 'Add',
+  name: 'Editor',
+  props: {
+    id: {
+        type: Number,
+        required: false
+    }
+  },
   data() {
     return {
       note: new Note()
@@ -25,6 +31,13 @@ export default {
         this.$q.notify(this.$t('editor.saved'));
         window.history.back();
       });
+    }
+  },
+  mounted: function() {
+    if (this.id) {
+        NotesDAO.getInstance().getById(this.id).then(note => {
+            this.note = note;
+        });
     }
   }
 }

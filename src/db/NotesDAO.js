@@ -10,9 +10,17 @@ export class NotesDAO {
     }
 
     save(note) {
+        if (note.id) {
+            return db.notes.update(note.id, note);
+        } else {
+            return db.notes.add(note);
+        }
         return db.notes.add(note);
     }
-    delete(note) {
-        return db.notes.delete(note.id);
+    remove(note) {
+        return db.notes.remove(note.id);
+    }
+    getById(id) {
+        return db.note.where({ id: id }).first();
     }
 };

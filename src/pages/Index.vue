@@ -13,7 +13,7 @@
         </q-card-section>
 
         <q-card-actions>
-          <q-btn flat>{{ $t('index.edit') }}</q-btn>
+          <q-btn flat:to="'/edit/' + note.id">{{ $t('index.edit') }}</q-btn>
           <q-btn flat @click="remove(note)">{{ $t('index.delete') }}</q-btn>
         </q-card-actions>
       </q-card>
@@ -37,17 +37,19 @@ export default {
   },
   methods: {
     remove: function(note) {
-        NotesDAO.getInstance().delete(note).then(() => {
+        NotesDAO.getInstance().remove(note).then(() => {
+            this.refresh();
             this.$q.notify(this.$t('index.deleted'));
+        });
+    },
+    refresh: function() {
+        NotesDAO.getInstance().get().then(result => {
+        this.notes = result;
         });
     }
   },
   mounted: function() {
-    NotesDAO.getInstance()
-    .get()
-    .then(result => {
-      this.notes = result;
-    });
+    this.refresh();
   }
 }
 </script>
