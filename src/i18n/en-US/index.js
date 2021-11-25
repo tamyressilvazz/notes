@@ -13,5 +13,10 @@ export default {
         content: 'Content',
         saved: 'Successfully saved',
         fieldIsRequired: "Field is required"
+    },
+    layout: {
+        home: {
+            caption: "See all your notes"
+        }
     }
 }

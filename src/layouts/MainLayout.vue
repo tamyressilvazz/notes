@@ -53,7 +53,7 @@ import NotesPages from 'components/NotesPages.vue'
 const linksList = [
   {
     title: 'Personal Home',
-    caption: 'See all your notes here.',
+    caption: 'layout.home.caption',
     icon: 'home',
     link: '/#'
   },
