@@ -12,8 +12,10 @@
         />
 
         <q-toolbar-title>
-          Notes
+          Notes App
         </q-toolbar-title>
+         <q-select v-model="lang" :options="langOptions" label="Quasar Language" dense borderless emit-value map-options options-dense style="min-width: 150px"
+        />
       </q-toolbar>
     </q-header>
 
@@ -77,25 +79,30 @@ const linksList = [
   }
 ];
 
-import { defineComponent, ref } from 'vue'
-
-export default defineComponent({
+export default {
   name: 'MainLayout',
-
   components: {
     NotesPages
   },
-
-  setup () {
-    const leftDrawerOpen = ref(false)
-
-    return {
-      notespages: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
-    }
-  }
-})
+  data() {
+        return {
+            leftDrawerOpen: false,
+            NotesPages: linksList,
+            lang: this.$i18n.locale,
+            languages: [{
+                    value: 'en-us',
+                    label: 'English'
+                },
+                {
+                    value: 'pt-br',
+                    label: 'Português'
+                },
+                {
+                    value: 'es-es',
+                    label: 'Español'
+                }
+            ]
+        }
+    },
+}
 </script>
