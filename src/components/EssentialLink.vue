@@ -2,7 +2,6 @@
   <q-item
     clickable
     tag="a"
-    target="_blank"
     :href="link"
   >
     <q-item-section
@@ -15,17 +14,15 @@
     <q-item-section>
       <q-item-label>{{ title }}</q-item-label>
       <q-item-label caption>
-        {{ caption }}
+        {{ $t(caption) }}
       </q-item-label>
     </q-item-section>
   </q-item>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'NotesPages',
+export default {
+  name: 'EssentialLink',
   props: {
     title: {
       type: String,
@@ -47,5 +44,5 @@ export default defineComponent({
       default: ''
     }
   }
-})
+}
 </script>

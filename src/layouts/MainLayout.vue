@@ -1,108 +1,83 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+<q-layout view="lHh Lpr lFf">
     <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="list"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
+        <q-toolbar>
+            <q-btn flat dense round icon="menu" aria-label="Menu" @click="leftDrawerOpen = !leftDrawerOpen" />
 
-        <q-toolbar-title>
-          Notes App
-        </q-toolbar-title>
-         <q-select v-model="lang" :options="langOptions" label="Quasar Language" dense borderless emit-value map-options options-dense style="min-width: 150px"
-        />
-      </q-toolbar>
+            <q-toolbar-title>
+                Notes App
+            </q-toolbar-title>
+            <q-btn flat round icon="language">
+                <q-menu>
+                    <q-list style="min-width: 100px">
+                        <q-item @click="lang = language.value" clickable v-close-popup v-for="language in languages">
+                            <q-item-section>{{ language.label }}</q-item-section>
+                        </q-item>
+                    </q-list>
+                </q-menu>
+            </q-btn>
+        </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Note Pages
-        </q-item-label>
-
-        <NotesPages
-          v-for="pages in notespages"
-          :key="pages.title"
-          v-bind="pages"
-        />
-      </q-list>
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered content-class="bg-grey-1">
+        <q-list>
+            <q-item-label header class="text-grey-8">
+                Menu
+            </q-item-label>
+            <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
+        </q-list>
     </q-drawer>
 
     <q-page-container>
-      <div class="row q-ma-md">
-        <div class="col-12">
-          <router-view />
+        <div class="row q-ma-md">
+            <div class="col-12">
+                <router-view />
+            </div>
         </div>
-      </div>
     </q-page-container>
-  </q-layout>
+</q-layout>
 </template>
 
 <script>
-import NotesPages from 'components/NotesPages.vue'
+import EssentialLink from 'components/EssentialLink.vue'
 
-const linksList = [
-  {
-    title: 'Personal Home',
+const linksData = [{
+    title: 'Home',
     caption: 'layout.home.caption',
     icon: 'home',
-    link: '/#'
-  },
-  {
-    title: 'Quick Note',
-    caption: 'Quickly create a rich document.',
-    icon: 'done',
-    link: '/quick-note'
-  },
-  {
-    title: 'Journal',
-    caption: 'Document your life - daily happenings, special occasions, and reflections on your goals.',
-    icon: 'book',
-    link: '/journal'
-  },
-  {
-    title: 'Add a page',
-    caption: 'Add a page in your notes',
-    icon: 'bookmark_add',
-    link: '/add'
-  }
-];
+    link: '#/'
+}];
 
 export default {
-  name: 'MainLayout',
-  components: {
-    NotesPages
-  },
-  data() {
+    name: 'MainLayout',
+    components: {
+        EssentialLink
+    },
+    data() {
         return {
             leftDrawerOpen: false,
-            NotesPages: linksList,
+            essentialLinks: linksData,
             lang: this.$i18n.locale,
             languages: [{
-                    value: 'en-us',
+                    value: 'en-US',
                     label: 'English'
                 },
                 {
-                    value: 'pt-br',
+                    value: 'pt-BR',
                     label: 'Português'
                 },
                 {
-                    value: 'es-es',
+                    value: 'es-ES',
                     label: 'Español'
                 }
             ]
         }
     },
+    watch: {
+        lang(lang) {
+            localStorage.setItem('lang', lang);
+            this.$i18n.locale = lang
+        }
+    }
 }
 </script>

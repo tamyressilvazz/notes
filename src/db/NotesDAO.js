@@ -5,6 +5,7 @@ export class NotesDAO {
     static getInstance() {
         return new NotesDAO();
     }
+
     get() {
         return db.notes.reverse().toArray();
     }
@@ -15,12 +16,21 @@ export class NotesDAO {
         } else {
             return db.notes.add(note);
         }
-        return db.notes.add(note);
     }
+
     remove(note) {
         return db.notes.remove(note.id);
     }
-    getById(id) {
-        return db.note.where({ id: id }).first();
+
+    update(note) {
+        if (note.id) {
+            return db.notes.update(note.id);
+        } else {
+            return db.notes.save(note);
+        }
     }
-};
+
+    getById(id) {
+        return db.notes.where({ id: id }).first();
+    }
+}
